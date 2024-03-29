@@ -13,6 +13,13 @@ libraryDependencies += "org.typelevel" %% "cats-core" % "2.10.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.5.4"
 libraryDependencies += "com.microsoft.playwright" % "playwright" % "1.42.0"
 libraryDependencies += "commons-lang" % "commons-lang" % "2.6"
+libraryDependencies += jdbc
+libraryDependencies += evolutions
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc" % "4.2.1"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-config" % "4.2.1"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-play-dbapi-adapter" % "3.0.0-scalikejdbc-4.2"
+libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.33"
+dependencyOverrides += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.3.0"
 
 val circeVersion = "0.14.1"
 
