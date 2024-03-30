@@ -10,7 +10,8 @@ create table game_data(
     detail varchar(255) not null,
     price int(4) not null,
     url varchar(255) not null,
-    category varchar(255) not null
+    category varchar(255) not null,
+    site varchar(255) not null
 ) engine=innodb charset=utf8mb4;
 
 # --- !Downs
