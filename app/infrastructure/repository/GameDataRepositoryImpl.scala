@@ -5,6 +5,7 @@ import models.GMarketDT
 import utils.DBUtils.{localTx, readOnly}
 import scalikejdbc._
 
+import java.time.LocalDateTime
 import scala.concurrent.Future
 
 class GameDataRepositoryImpl extends GameDataRepository {
@@ -19,7 +20,9 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | price,
              | url,
              | category,
-             | site
+             | site,
+             | created_time,
+             | updated_time
              | ) VALUES (
              | ${gameData.title},
              | ${gameData.imgSrc},
@@ -28,7 +31,9 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ${gameData.price},
              | ${gameData.url},
              | ${gameData.category},
-             | ${gameData.site}
+             | ${gameData.site},
+             | ${LocalDateTime.now()},
+             | ${LocalDateTime.now()}
              | ) ON DUPLICATE KEY UPDATE
              |  title = VALUES(title),
              |  img_src = VALUES(img_src),
@@ -36,7 +41,8 @@ class GameDataRepositoryImpl extends GameDataRepository {
              |  detail = VALUES(detail),
              |  price = VALUES(price),
              |  category = VALUES(category),
-             |  site = VALUES(site)
+             |  site = VALUES(site),
+             |  updated_time = ${LocalDateTime.now()}
            """.stripMargin
       }.foreach(_.update())
     }
