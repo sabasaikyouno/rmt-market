@@ -5,6 +5,7 @@ import models.GMarketDT
 import utils.DBUtils.{localTx, readOnly}
 import scalikejdbc._
 
+import java.time.LocalDateTime
 import scala.concurrent.Future
 
 class GameDataRepositoryImpl extends GameDataRepository {
@@ -19,19 +20,31 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | price,
              | url,
              | category,
-             | site
+             | site,
+             | created_time,
+             | updated_time
              | ) VALUES (
-             | ${gameData.title}
-             | ${gameData.imgSrc}
-             | ${gameData.gameTitle}
-             | ${gameData.detail}
-             | ${gameData.price}
-             | ${gameData.url}
-             | ${gameData.category}
-             | ${gameData.site}
-             | )
+             | ${gameData.title},
+             | ${gameData.imgSrc},
+             | ${gameData.gameTitle},
+             | ${gameData.detail},
+             | ${gameData.price},
+             | ${gameData.url},
+             | ${gameData.category},
+             | ${gameData.site},
+             | ${LocalDateTime.now()},
+             | ${LocalDateTime.now()}
+             | ) ON DUPLICATE KEY UPDATE
+             |  title = VALUES(title),
+             |  img_src = VALUES(img_src),
+             |  game_title = VALUES(game_title),
+             |  detail = VALUES(detail),
+             |  price = VALUES(price),
+             |  category = VALUES(category),
+             |  site = VALUES(site),
+             |  updated_time = ${LocalDateTime.now()}
            """.stripMargin
-      }.foreach(_.update.apply())
+      }.foreach(_.update())
     }
 
   def get(gameTitle: String): Future[_] = {
