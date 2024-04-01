@@ -21,17 +21,24 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | category,
              | site
              | ) VALUES (
-             | ${gameData.title}
-             | ${gameData.imgSrc}
-             | ${gameData.gameTitle}
-             | ${gameData.detail}
-             | ${gameData.price}
-             | ${gameData.url}
-             | ${gameData.category}
+             | ${gameData.title},
+             | ${gameData.imgSrc},
+             | ${gameData.gameTitle},
+             | ${gameData.detail},
+             | ${gameData.price},
+             | ${gameData.url},
+             | ${gameData.category},
              | ${gameData.site}
-             | )
+             | ) ON DUPLICATE KEY UPDATE
+             |  title = VALUES(title),
+             |  img_src = VALUES(img_src),
+             |  game_title = VALUES(game_title),
+             |  detail = VALUES(detail),
+             |  price = VALUES(price),
+             |  category = VALUES(category),
+             |  site = VALUES(site)
            """.stripMargin
-      }.foreach(_.update.apply())
+      }.foreach(_.update())
     }
 
   def get(gameTitle: String): Future[_] = {
