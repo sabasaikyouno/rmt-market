@@ -47,7 +47,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
       }.foreach(_.update())
     }
 
-  def get(gameTitle: String): Future[_] = {
+  def get(gameTitle: String): Future[List[GMarketDT]] = {
     readOnly { implicit session =>
       val sql = sql"""SELECT
            | *
