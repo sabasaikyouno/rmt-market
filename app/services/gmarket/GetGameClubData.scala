@@ -15,7 +15,7 @@ object GetGameClubData {
         for {
           title <- IO(ele.locator(".title h3 a").innerHTML())
           imgSrc <- IO(ele.locator(".item-thumb").getAttribute("src"))
-          gameTitle <- IO(ele.locator(".game-title a span").innerHTML())
+          gameTitle <- IO(ele.locator(".game-title a span").innerText())
           detail <- IO(ele.locator(".detail").innerHTML())
           price <- IO(parsePrice(ele.locator(".price").innerHTML()))
           url <- IO(ele.locator(".title h3 a").getAttribute("href"))
