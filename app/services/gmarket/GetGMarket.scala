@@ -11,7 +11,7 @@ import services.gmarket.GetRmtClubData.getRmtClubData
 
 import scala.jdk.CollectionConverters._
 
-object getGMarket {
+object GetGMarket {
   def getGMarket = for {
     playwright <- IO(Playwright.create())
     browser <- IO(playwright.chromium().launch(new BrowserType.LaunchOptions().setArgs(List("--blink-settings=imagesEnabled=false", "--disable-remote-fonts").asJava)))
@@ -23,9 +23,9 @@ object getGMarket {
           gameTradeDtList <- getGameTradeData(gameTradeUrl, page)
           gameClubDtList <- getGameClubData(gameClubUrl, page)
           rmtClubDtList <- getRmtClubData(rmtClubUrl, page)
-        } yield (title, gameTradeDtList.map(_.toDt) ::: gameClubDtList.map(_.toDt) ::: rmtClubDtList.map(_.toDt))
+        } yield gameTradeDtList.map(_.toDt) ::: gameClubDtList.map(_.toDt) ::: rmtClubDtList.map(_.toDt)
       }
     }
     _ <- IO(playwright.close())
-  } yield gMarketDtList
+  } yield gMarketDtList.flatten
 }
