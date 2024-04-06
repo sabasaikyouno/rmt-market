@@ -15,33 +15,33 @@ class GameDataRepositoryImpl extends GameDataRepository {
         sql"""INSERT INTO game_data (
              | title,
              | img_src,
-             | game_title,
+             | game_title_id,
              | detail,
              | price,
              | url,
-             | category,
-             | site,
+             | category_id,
+             | site_id,
              | created_time,
              | updated_time
              | ) VALUES (
              | ${gameData.title},
              | ${gameData.imgSrc},
-             | ${gameData.gameTitle},
+             | ${gameData.gameTitleId},
              | ${gameData.detail},
              | ${gameData.price},
              | ${gameData.url},
-             | ${gameData.category},
-             | ${gameData.site},
+             | ${gameData.categoryId},
+             | ${gameData.siteId},
              | ${LocalDateTime.now()},
              | ${LocalDateTime.now()}
              | ) ON DUPLICATE KEY UPDATE
              |  title = VALUES(title),
              |  img_src = VALUES(img_src),
-             |  game_title = VALUES(game_title),
+             |  game_title = VALUES(game_title_id),
              |  detail = VALUES(detail),
              |  price = VALUES(price),
-             |  category = VALUES(category),
-             |  site = VALUES(site),
+             |  category = VALUES(category_id),
+             |  site = VALUES(site_id),
              |  updated_time = ${LocalDateTime.now()}
            """.stripMargin
       }.foreach(_.update())
