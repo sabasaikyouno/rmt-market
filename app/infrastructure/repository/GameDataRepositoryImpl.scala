@@ -62,11 +62,11 @@ class GameDataRepositoryImpl extends GameDataRepository {
     GMarketDT(
       rs.string("title"),
       rs.string("img_src"),
-      rs.string("game_title"),
+      rs.string("game_title_id"),
       rs.string("detail"),
       rs.int("price"),
       rs.string("url"),
-      rs.string("category"),
-      rs.string("site")
+      rs.string("category_id"),
+      rs.string("site_id")
     )
 }
