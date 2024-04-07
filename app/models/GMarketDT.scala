@@ -5,12 +5,12 @@ import play.api.libs.json.{Json, OWrites, Reads}
 case class GMarketDT(
   title: String,
   imgSrc: String,
-  gameTitleId: String,
+  gameTitleId: Int,
   detail: String,
   price: Int,
   url: String,
-  categoryId: String,
-  siteId: String
+  categoryId: Int,
+  siteId: Int
 )
 
 object GMarketDT {

@@ -28,9 +28,15 @@ create table site(
 
 create table game_title(
     game_title_id int(4) not null unique,
-    game_title varchar(255) not null unique
+    game_title varchar(100) not null unique
 ) engine=innodb charset=utf8mb4;
 
 # --- !Downs
 
 drop table game_data;
+
+drop table category;
+
+drop table site;
+
+drop table game_title;

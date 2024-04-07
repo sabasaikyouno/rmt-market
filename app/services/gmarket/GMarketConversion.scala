@@ -2,72 +2,77 @@ package services.gmarket
 
 import models.{GMarketDT, GameClubDT, GameTradeDT, RmtClubDT}
 
+/**
+ * category id
+ * 1はアカウント 2はアイテム 3は代行 4はその他
+ * site id
+ * 1はRmtClub 2はGameClub 3はGameTrade
+ */
 object GMarketConversion {
   implicit class ConvertOps[A: Conversion](a: A) {
-    def toDt = {
-      implicitly[Conversion[A]].toGMarket(a)
+    def toDt(gameTitleId: Int) = {
+      implicitly[Conversion[A]].toGMarket(a, gameTitleId)
     }
   }
 
   implicit val rmtClubDT: Conversion[RmtClubDT] = new Conversion[RmtClubDT] {
-    def toGMarket(dt: RmtClubDT) = GMarketDT(
+    def toGMarket(dt: RmtClubDT, gameTitleId: Int) = GMarketDT(
       dt.title,
       dt.imgSrc,
-      dt.gameTitle,
+      gameTitleId,
       dt.detail,
       dt.price,
       dt.url,
       toGMarketCategory(dt.category),
-      "RmtClub"
+      1
     )
 
-    def toGMarketCategory: String => String = {
-      case "1" => "アカウント"
-      case "2" => "アイテム"
-      case "4" => "代行"
+    def toGMarketCategory: String => Int = {
+      case "1" => 1
+      case "2" => 2
+      case "4" => 3
     }
   }
 
   implicit val gameClubDT: Conversion[GameClubDT] = new Conversion[GameClubDT] {
-    def toGMarket(dt: GameClubDT) = GMarketDT(
+    def toGMarket(dt: GameClubDT, gameTitleId: Int) = GMarketDT(
       dt.title,
       dt.imgSrc,
-      dt.gameTitle,
+      gameTitleId,
       dt.detail,
       dt.price,
       dt.url,
       toGMarketCategory(dt.category),
-      "GameClub"
+      2
     )
 
-    def toGMarketCategory: String => String = {
-      case "引退垢" => "アカウント"
-      case "リセマラ・初期垢" => "アカウント"
-      case "アイテム・通貨" => "アイテム"
-      case "代行" => "代行"
-      case _ => "その他"
+    def toGMarketCategory: String => Int = {
+      case "引退垢" => 1
+      case "リセマラ・初期垢" => 1
+      case "アイテム・通貨" => 2
+      case "代行" => 3
+      case _ => 4
     }
   }
 
   implicit val gameTradeDT: Conversion[GameTradeDT] = new Conversion[GameTradeDT] {
-    def toGMarket(dt: GameTradeDT) = GMarketDT(
+    def toGMarket(dt: GameTradeDT, gameTitleId: Int) = GMarketDT(
       dt.title,
       dt.imgSrc,
-      dt.gameTitle,
+      gameTitleId,
       dt.detail,
       dt.price,
       dt.url,
       toGMarketCategory(dt.category),
-      "GameTrade"
+      3
     )
-    def toGMarketCategory: String => String = {
-      case "exhibits" => "アカウント"
-      case "golds" => "アイテム"
-      case "items" => "アイテム"
-      case "agencies" => "代行"
-      case _ => "その他"
+    def toGMarketCategory: String => Int = {
+      case "exhibits" => 1
+      case "golds" => 2
+      case "items" => 2
+      case "agencies" => 3
+      case _ => 4
     }
-
   }
 }
 

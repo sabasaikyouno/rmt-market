@@ -37,22 +37,22 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ) ON DUPLICATE KEY UPDATE
              |  title = VALUES(title),
              |  img_src = VALUES(img_src),
-             |  game_title = VALUES(game_title_id),
+             |  game_title_id = VALUES(game_title_id),
              |  detail = VALUES(detail),
              |  price = VALUES(price),
-             |  category = VALUES(category_id),
-             |  site = VALUES(site_id),
+             |  category_id = VALUES(category_id),
+             |  site_id = VALUES(site_id),
              |  updated_time = ${LocalDateTime.now()}
            """.stripMargin
       }.foreach(_.update())
     }
 
-  def get(gameTitle: String): Future[List[GMarketDT]] = {
+  def get(gameTitleId: Int): Future[List[GMarketDT]] = {
     readOnly { implicit session =>
       val sql = sql"""SELECT
            | *
            | FROM game_data
-           | WHERE game_title = $gameTitle
+           | WHERE game_title_id = $gameTitleId
          """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
@@ -62,11 +62,11 @@ class GameDataRepositoryImpl extends GameDataRepository {
     GMarketDT(
       rs.string("title"),
       rs.string("img_src"),
-      rs.string("game_title_id"),
+      rs.int("game_title_id"),
       rs.string("detail"),
       rs.int("price"),
       rs.string("url"),
-      rs.string("category_id"),
-      rs.string("site_id")
+      rs.int("category_id"),
+      rs.int("site_id")
     )
 }
