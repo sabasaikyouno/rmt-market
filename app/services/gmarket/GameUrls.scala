@@ -13,23 +13,26 @@ case class GameUrl(url: String, gameTitle: String)
 
 object GameUrls {
 
+  /**上から順番に
+  * apex fortnight valorant あつ森 ドラクエ10 ポケモン剣盾 ポケモンSV FF14 モンスト プロスピA FGO バウンティラッシュ
+  * 原神 ポケモンgo 荒野行動 パズドラ*/
   def getGameUrls(page: Page) = List(
-    "APEX Legends" -> List("https://gametrade.jp/apex-legends/exhibits", "https://gameclub.jp/apex-legends", "https://rmt.club/post_list?title=21977"),
-    "フォートナイト(Fortnite)" -> List("https://gametrade.jp/fortnight/exhibits", "https://gameclub.jp/fortnight", "https://rmt.club/post_list?title=9633"),
-    "VALORANT(ヴァロラント)" -> List("https://gametrade.jp/valorant/exhibits", "https://gameclub.jp/valorant", "https://rmt.club/post_list?title=33056"),
-    "あつまれ どうぶつの森(あつ森)" -> List("https://gametrade.jp/atsumare_doubutunomori/exhibits", "https://gameclub.jp/atsumare-doubutunomori", "https://rmt.club/post_list?title=32391"),
-    "ドラクエ10(DQX)" -> List("https://gametrade.jp/dqx/exhibits", "https://gameclub.jp/dqx", "https://rmt.club/post_list?title=357"),
-    "ポケモン剣盾(ソードシールド)" -> List("https://gametrade.jp/pokemon-sword-shield/exhibits", "https://gameclub.jp/pokemon-sword-shield", "https://rmt.club/post_list?title=29450"),
-    "ポケモンSV(スカーレットバイオレット)" -> List("https://gametrade.jp/pokemon-sv/exhibits", "https://gameclub.jp/pokemon-sv", "https://rmt.club/post_list?title=45356"),
-    "FF14" -> List("https://gametrade.jp/ff14/exhibits", "https://gameclub.jp/ff14", "https://rmt.club/post_list?title=435"),
-    "モンスト" -> List("https://gametrade.jp/monst/exhibits", "https://gameclub.jp/monst", "https://rmt.club/post_list?title=510"),
-    "プロスピA" -> List("https://gametrade.jp/prospi-a/exhibits", "https://gameclub.jp/prospi-a", "https://rmt.club/post_list?title=1168"),
-    "FGO" -> List("https://gametrade.jp/fate-go/exhibits", "https://gameclub.jp/fate-go", "https://rmt.club/post_list?title=803"),
-    "バウンティラッシュ" -> List("https://gametrade.jp/opbr/exhibits", "https://gameclub.jp/opbr", "https://rmt.club/post_list?title=11157"),
-    "原神" -> List("https://gametrade.jp/genshin-impact/exhibits", "https://gameclub.jp/genshin-impact", "https://rmt.club/post_list?title=29069"),
-    "ポケモンGO" -> List("https://gametrade.jp/pokemon-go/exhibits", "https://gameclub.jp/pokemon-go", "https://rmt.club/post_list?title=3281"),
-    "荒野行動" -> List("https://gametrade.jp/knives-out/exhibits", "https://gameclub.jp/knives-out", "https://rmt.club/post_list?title=9632"),
-    "パズドラ(パズル＆ドラゴンズ)" -> List("https://gametrade.jp/pazudora/exhibits", "https://gameclub.jp/pazudora", "https://rmt.club/post_list?title=450")
+    1 -> List("https://gametrade.jp/apex-legends/exhibits", "https://gameclub.jp/apex-legends", "https://rmt.club/post_list?title=21977"),
+    2 -> List("https://gametrade.jp/fortnight/exhibits", "https://gameclub.jp/fortnight", "https://rmt.club/post_list?title=9633"),
+    3 -> List("https://gametrade.jp/valorant/exhibits", "https://gameclub.jp/valorant", "https://rmt.club/post_list?title=33056"),
+    4 -> List("https://gametrade.jp/atsumare_doubutunomori/exhibits", "https://gameclub.jp/atsumare-doubutunomori", "https://rmt.club/post_list?title=32391"),
+    5 -> List("https://gametrade.jp/dqx/exhibits", "https://gameclub.jp/dqx", "https://rmt.club/post_list?title=357"),
+    6 -> List("https://gametrade.jp/pokemon-sword-shield/exhibits", "https://gameclub.jp/pokemon-sword-shield", "https://rmt.club/post_list?title=29450"),
+    7 -> List("https://gametrade.jp/pokemon-sv/exhibits", "https://gameclub.jp/pokemon-sv", "https://rmt.club/post_list?title=45356"),
+    8 -> List("https://gametrade.jp/ff14/exhibits", "https://gameclub.jp/ff14", "https://rmt.club/post_list?title=435"),
+    9 -> List("https://gametrade.jp/monst/exhibits", "https://gameclub.jp/monst", "https://rmt.club/post_list?title=510"),
+    10 -> List("https://gametrade.jp/prospi-a/exhibits", "https://gameclub.jp/prospi-a", "https://rmt.club/post_list?title=1168"),
+    11 -> List("https://gametrade.jp/fate-go/exhibits", "https://gameclub.jp/fate-go", "https://rmt.club/post_list?title=803"),
+    12 -> List("https://gametrade.jp/opbr/exhibits", "https://gameclub.jp/opbr", "https://rmt.club/post_list?title=11157"),
+    13 -> List("https://gametrade.jp/genshin-impact/exhibits", "https://gameclub.jp/genshin-impact", "https://rmt.club/post_list?title=29069"),
+    14 -> List("https://gametrade.jp/pokemon-go/exhibits", "https://gameclub.jp/pokemon-go", "https://rmt.club/post_list?title=3281"),
+    15 -> List("https://gametrade.jp/knives-out/exhibits", "https://gameclub.jp/knives-out", "https://rmt.club/post_list?title=9632"),
+    16 -> List("https://gametrade.jp/pazudora/exhibits", "https://gameclub.jp/pazudora", "https://rmt.club/post_list?title=450")
   )
   def getAllGameUrls(page: Page) = for {
     gameTradeUrls <- getGameTradeUrls(page)
