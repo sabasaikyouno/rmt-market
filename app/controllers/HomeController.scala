@@ -1,7 +1,7 @@
 package controllers
 
 import domain.repository.GameDataRepository
-import models.GMarketDT
+import models.{GMarketDT, GameTitle}
 
 import javax.inject._
 import play.api._
@@ -15,9 +15,14 @@ class HomeController @Inject()(
   val controllerComponents: ControllerComponents,
   val gameDataRepository: GameDataRepository
 ) extends BaseController {
+  def getGameDataList(gameTitleId: Int) = Action.async { implicit request =>
+    gameDataRepository.get(gameTitleId).map { list =>
+      Ok(Json.toJson(list))
+    }
+  }
 
-  def get(title: String) = Action.async { implicit request =>
-    gameDataRepository.get(title).map { list =>
+  def getAllGameTitle() = Action.async { implicit request =>
+    gameDataRepository.getAllGameTitle.map { list =>
       Ok(Json.toJson(list))
     }
   }
