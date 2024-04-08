@@ -4,7 +4,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /get/:gameTitleId                           controllers.HomeController.get(gameTitleId: Int)
+GET     /getGameDataList/:gameTitleId                           controllers.HomeController.getGameDataList(gameTitleId: Int)
 GET     /getAllGameTitle                            controllers.HomeController.getAllGameTitle()
 
 # Map static resources from the /public folder to the /assets URL path
