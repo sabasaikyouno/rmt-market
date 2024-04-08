@@ -1,7 +1,7 @@
 package infrastructure.repository
 
 import domain.repository.GameDataRepository
-import models.GMarketDT
+import models.{GMarketDT, GameTitle}
 import utils.DBUtils.{localTx, readOnly}
 import scalikejdbc._
 
@@ -58,6 +58,15 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
+  def getAllGameTitle: Future[List[GameTitle]] = readOnly { implicit session =>
+    val sql =
+      sql"""SELECT
+        | *
+        | FROM game_title
+         """.stripMargin
+    sql.map(resultSetToGameTitle).list.apply()
+  }
+
   private[this] def resultSetToGMarketData(rs: WrappedResultSet): GMarketDT =
     GMarketDT(
       rs.string("title"),
@@ -68,5 +77,11 @@ class GameDataRepositoryImpl extends GameDataRepository {
       rs.string("url"),
       rs.int("category_id"),
       rs.int("site_id")
+    )
+
+  private[this] def resultSetToGameTitle(rs: WrappedResultSet): GameTitle =
+    GameTitle(
+      rs.int("game_title_id"),
+      rs.string("game_title")
     )
 }
