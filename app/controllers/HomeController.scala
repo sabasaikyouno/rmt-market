@@ -32,4 +32,10 @@ class HomeController @Inject()(
       Ok(Json.toJson(list))
     }
   }
+
+  def getSearchOptions() = Action.async { implicit request =>
+    gameDataRepository.getAllGameTitle.map { list =>
+      Ok(Json.toJson(list.map(data => Json.obj("label" -> data.gameTitle))))
+    }
+  }
 }
