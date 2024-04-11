@@ -47,13 +47,26 @@ class GameDataRepositoryImpl extends GameDataRepository {
       }.foreach(_.update())
     }
 
-  def get(gameTitleId: Int): Future[List[GMarketDT]] = {
+  def getById(gameTitleId: Int): Future[List[GMarketDT]] = {
     readOnly { implicit session =>
       val sql = sql"""SELECT
            | *
            | FROM game_data
            | WHERE game_title_id = $gameTitleId
          """.stripMargin
+      sql.map(resultSetToGMarketData).list.apply()
+    }
+  }
+
+  def getByTitle(gameTitle: String): Future[List[GMarketDT]] = {
+    readOnly { implicit session =>
+      val sql =
+        sql"""SELECT
+          | game_data.*
+          | FROM game_data
+          | INNER JOIN game_title ON game_title.game_title_id = game_data.game_title_id
+          | WHERE game_title.game_title = $gameTitle
+           """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
   }
