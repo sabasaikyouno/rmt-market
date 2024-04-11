@@ -15,8 +15,14 @@ class HomeController @Inject()(
   val controllerComponents: ControllerComponents,
   val gameDataRepository: GameDataRepository
 ) extends BaseController {
-  def getGameDataList(gameTitleId: Int) = Action.async { implicit request =>
-    gameDataRepository.get(gameTitleId).map { list =>
+  def getGameDataListById(gameTitleId: Int) = Action.async { implicit request =>
+    gameDataRepository.getById(gameTitleId).map { list =>
+      Ok(Json.toJson(list))
+    }
+  }
+
+  def getGameDataListByTitle(gameTitle: String) = Action.async { implicit request =>
+    gameDataRepository.getByTitle(gameTitle).map { list =>
       Ok(Json.toJson(list))
     }
   }
