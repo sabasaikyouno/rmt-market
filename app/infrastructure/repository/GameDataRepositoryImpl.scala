@@ -52,7 +52,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
       val sql = sql"""SELECT
            | *
            | FROM game_data
-           | WHERE game_title_id = $gameTitleId
+           | WHERE game_title_data_id = $gameTitleId
          """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
@@ -64,8 +64,8 @@ class GameDataRepositoryImpl extends GameDataRepository {
         sql"""SELECT
           | game_data.*
           | FROM game_data
-          | INNER JOIN game_title ON game_title.game_title_id = game_data.game_title_id
-          | WHERE game_title.game_title = $gameTitle
+          | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+          | WHERE game_title_data.game_title = $gameTitle
            """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
