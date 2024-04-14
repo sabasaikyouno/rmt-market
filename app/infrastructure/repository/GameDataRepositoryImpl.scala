@@ -15,7 +15,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
         sql"""INSERT INTO game_data (
              | title,
              | img_src,
-             | game_title_id,
+             | game_title_data_id,
              | detail,
              | price,
              | url,
@@ -26,7 +26,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ) VALUES (
              | ${gameData.title},
              | ${gameData.imgSrc},
-             | ${gameData.gameTitleId},
+             | ${gameData.gameTitleDataId},
              | ${gameData.detail},
              | ${gameData.price},
              | ${gameData.url},
@@ -37,7 +37,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ) ON DUPLICATE KEY UPDATE
              |  title = VALUES(title),
              |  img_src = VALUES(img_src),
-             |  game_title_id = VALUES(game_title_id),
+             |  game_title_data_id = VALUES(game_title_data_id),
              |  detail = VALUES(detail),
              |  price = VALUES(price),
              |  category_id = VALUES(category_id),
@@ -84,7 +84,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
     GMarketDT(
       rs.string("title"),
       rs.string("img_src"),
-      rs.int("game_title_id"),
+      rs.int("game_title_data_id"),
       rs.string("detail"),
       rs.int("price"),
       rs.string("url"),
