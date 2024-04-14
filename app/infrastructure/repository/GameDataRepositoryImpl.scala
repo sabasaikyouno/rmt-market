@@ -1,7 +1,7 @@
 package infrastructure.repository
 
 import domain.repository.GameDataRepository
-import models.{GMarketDT, GameTitle}
+import models.{GMarketDT, GameTitleData}
 import utils.DBUtils.{localTx, readOnly}
 import scalikejdbc._
 
@@ -15,7 +15,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
         sql"""INSERT INTO game_data (
              | title,
              | img_src,
-             | game_title_id,
+             | game_title_data_id,
              | detail,
              | price,
              | url,
@@ -26,7 +26,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ) VALUES (
              | ${gameData.title},
              | ${gameData.imgSrc},
-             | ${gameData.gameTitleId},
+             | ${gameData.gameTitleDataId},
              | ${gameData.detail},
              | ${gameData.price},
              | ${gameData.url},
@@ -37,7 +37,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
              | ) ON DUPLICATE KEY UPDATE
              |  title = VALUES(title),
              |  img_src = VALUES(img_src),
-             |  game_title_id = VALUES(game_title_id),
+             |  game_title_data_id = VALUES(game_title_data_id),
              |  detail = VALUES(detail),
              |  price = VALUES(price),
              |  category_id = VALUES(category_id),
@@ -52,7 +52,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
       val sql = sql"""SELECT
            | *
            | FROM game_data
-           | WHERE game_title_id = $gameTitleId
+           | WHERE game_title_data_id = $gameTitleId
          """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
@@ -64,27 +64,27 @@ class GameDataRepositoryImpl extends GameDataRepository {
         sql"""SELECT
           | game_data.*
           | FROM game_data
-          | INNER JOIN game_title ON game_title.game_title_id = game_data.game_title_id
-          | WHERE game_title.game_title = $gameTitle
+          | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+          | WHERE game_title_data.game_title = $gameTitle
            """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
   }
 
-  def getAllGameTitle: Future[List[GameTitle]] = readOnly { implicit session =>
+  def getAllGameTitleData: Future[List[GameTitleData]] = readOnly { implicit session =>
     val sql =
       sql"""SELECT
         | *
-        | FROM game_title
+        | FROM game_title_data
          """.stripMargin
-    sql.map(resultSetToGameTitle).list.apply()
+    sql.map(resultSetToGameTitleData).list.apply()
   }
 
   private[this] def resultSetToGMarketData(rs: WrappedResultSet): GMarketDT =
     GMarketDT(
       rs.string("title"),
       rs.string("img_src"),
-      rs.int("game_title_id"),
+      rs.int("game_title_data_id"),
       rs.string("detail"),
       rs.int("price"),
       rs.string("url"),
@@ -92,9 +92,10 @@ class GameDataRepositoryImpl extends GameDataRepository {
       rs.int("site_id")
     )
 
-  private[this] def resultSetToGameTitle(rs: WrappedResultSet): GameTitle =
-    GameTitle(
+  private[this] def resultSetToGameTitleData(rs: WrappedResultSet): GameTitleData =
+    GameTitleData(
       rs.int("game_title_id"),
-      rs.string("game_title")
+      rs.string("game_title"),
+      rs.string("game_img")
     )
 }

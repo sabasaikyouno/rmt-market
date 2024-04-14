@@ -1,6 +1,6 @@
 package domain.repository
 
-import models.{GMarketDT, GameTitle}
+import models.{GMarketDT, GameTitleData}
 
 import scala.concurrent.Future
 
@@ -11,5 +11,5 @@ trait GameDataRepository {
 
   def getByTitle(gameTitle: String): Future[List[GMarketDT]]
 
-  def getAllGameTitle: Future[List[GameTitle]]
+  def getAllGameTitleData: Future[List[GameTitleData]]
 }
