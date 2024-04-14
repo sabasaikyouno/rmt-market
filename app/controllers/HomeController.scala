@@ -1,7 +1,7 @@
 package controllers
 
 import domain.repository.GameDataRepository
-import models.{GMarketDT, GameTitle}
+import models.{GMarketDT, GameTitleData}
 
 import javax.inject._
 import play.api._
@@ -27,14 +27,14 @@ class HomeController @Inject()(
     }
   }
 
-  def getAllGameTitle() = Action.async { implicit request =>
-    gameDataRepository.getAllGameTitle.map { list =>
+  def getAllGameTitleData() = Action.async { implicit request =>
+    gameDataRepository.getAllGameTitleData.map { list =>
       Ok(Json.toJson(list))
     }
   }
 
   def getSearchOptions() = Action.async { implicit request =>
-    gameDataRepository.getAllGameTitle.map { list =>
+    gameDataRepository.getAllGameTitleData.map { list =>
       Ok(Json.toJson(list.map(data => Json.obj("label" -> data.gameTitle))))
     }
   }

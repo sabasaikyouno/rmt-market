@@ -1,7 +1,7 @@
 package infrastructure.repository
 
 import domain.repository.GameDataRepository
-import models.{GMarketDT, GameTitle}
+import models.{GMarketDT, GameTitleData}
 import utils.DBUtils.{localTx, readOnly}
 import scalikejdbc._
 
@@ -71,13 +71,13 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
-  def getAllGameTitle: Future[List[GameTitle]] = readOnly { implicit session =>
+  def getAllGameTitleData: Future[List[GameTitleData]] = readOnly { implicit session =>
     val sql =
       sql"""SELECT
         | *
-        | FROM game_title
+        | FROM game_title_data
          """.stripMargin
-    sql.map(resultSetToGameTitle).list.apply()
+    sql.map(resultSetToGameTitleData).list.apply()
   }
 
   private[this] def resultSetToGMarketData(rs: WrappedResultSet): GMarketDT =
@@ -92,9 +92,10 @@ class GameDataRepositoryImpl extends GameDataRepository {
       rs.int("site_id")
     )
 
-  private[this] def resultSetToGameTitle(rs: WrappedResultSet): GameTitle =
-    GameTitle(
+  private[this] def resultSetToGameTitleData(rs: WrappedResultSet): GameTitleData =
+    GameTitleData(
       rs.int("game_title_id"),
-      rs.string("game_title")
+      rs.string("game_title"),
+      rs.string("game_img")
     )
 }
