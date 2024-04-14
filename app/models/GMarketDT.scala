@@ -5,7 +5,7 @@ import play.api.libs.json.{Json, OWrites, Reads}
 case class GMarketDT(
   title: String,
   imgSrc: String,
-  gameTitleId: Int,
+  gameTitleDataId: Int,
   detail: String,
   price: Int,
   url: String,
