@@ -67,9 +67,22 @@ class GameDataRepositoryImpl extends GameDataRepository {
           | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
           | WHERE game_title_data.game_title = $gameTitle
           | ORDER BY updated_time DESC
-          | LIMIT ${page * 21}, 21
+          | LIMIT ${(page - 1).max(0) * 21}, 21
            """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
+    }
+  }
+
+  def getGameDataSize(gameTitle: String): Future[Option[Int]] = {
+    readOnly { implicit session =>
+      val sql =
+        sql"""SELECT
+             | COUNT(*)
+             | FROM game_data
+             | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+             | WHERE game_title_data.game_title = $gameTitle
+           """.stripMargin
+      sql.map(_.int("COUNT(*)")).single.apply()
     }
   }
 
