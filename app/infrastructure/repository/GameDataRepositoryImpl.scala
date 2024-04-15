@@ -58,7 +58,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
-  def getByTitle(gameTitle: String): Future[List[GMarketDT]] = {
+  def getByTitle(gameTitle: String, page: Int): Future[List[GMarketDT]] = {
     readOnly { implicit session =>
       val sql =
         sql"""SELECT
@@ -66,6 +66,8 @@ class GameDataRepositoryImpl extends GameDataRepository {
           | FROM game_data
           | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
           | WHERE game_title_data.game_title = $gameTitle
+          | ORDER BY updated_time DESC
+          | LIMIT ${page * 21}, 21
            """.stripMargin
       sql.map(resultSetToGMarketData).list.apply()
     }
