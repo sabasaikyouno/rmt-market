@@ -21,10 +21,16 @@ class HomeController @Inject()(
     }
   }
 
-  def getGameDataListByTitle(gameTitle: String) = Action.async { implicit request =>
-    gameDataRepository.getByTitle(gameTitle).map { list =>
+  def getGameDataListByTitle(gameTitle: String, page:Int) = Action.async { implicit request =>
+    gameDataRepository.getByTitle(gameTitle, page).map { list =>
       Ok(Json.toJson(list))
     }
+  }
+
+  def getGameDataPage(gameTitle: String) = Action.async { implicit request =>
+    gameDataRepository.getGameDataSize(gameTitle).map( size =>
+      Ok(Json.toJson(scala.math.ceil(size.getOrElse(0) / 22.0).toInt))
+    )
   }
 
   def getAllGameTitleData() = Action.async { implicit request =>
