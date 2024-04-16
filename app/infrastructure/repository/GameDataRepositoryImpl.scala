@@ -95,6 +95,18 @@ class GameDataRepositoryImpl extends GameDataRepository {
     sql.map(resultSetToGameTitleData).list.apply()
   }
 
+  def getCategory(gameTitle: String): Future[List[String]] = readOnly { implicit session =>
+    val sql =
+      sql"""SELECT
+           | DISTINCT category.category
+           | FROM game_data
+           | INNER JOIN category ON category.category_id = game_data.category_id
+           | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+           | WHERE game_title_data.game_title = $gameTitle
+         """.stripMargin
+    sql.map(_.string("category")).list.apply()
+  }
+
   private[this] def resultSetToGMarketData(rs: WrappedResultSet): GMarketDT =
     GMarketDT(
       rs.string("title"),

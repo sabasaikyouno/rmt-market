@@ -14,4 +14,6 @@ trait GameDataRepository {
   def getGameDataSize(gameTitle: String): Future[Option[Int]]
 
   def getAllGameTitleData: Future[List[GameTitleData]]
+
+  def getCategory(gameTitle: String): Future[List[String]]
 }

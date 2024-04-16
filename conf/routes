@@ -9,6 +9,7 @@ GET     /api/getGameDataListByTitle/:gameTitle              controllers.HomeCont
 GET     /api/getGameDataPage/:gameTitle                     controllers.HomeController.getGameDataPage(gameTitle: String)
 GET     /api/getAllGameTitleData                            controllers.HomeController.getAllGameTitleData()
 GET     /api/getSearchOptions                               controllers.HomeController.getSearchOptions()
+GET     /api/getCategory/:gameTitle                         controllers.HomeController.getCategory(gameTitle: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

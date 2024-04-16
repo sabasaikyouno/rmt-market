@@ -44,4 +44,10 @@ class HomeController @Inject()(
       Ok(Json.toJson(list.map(data => Json.obj("label" -> data.gameTitle))))
     }
   }
+
+  def getCategory(gameTitle: String) = Action.async { implicit request =>
+    gameDataRepository.getCategory(gameTitle).map { list =>
+      Ok(Json.toJson(list))
+    }
+  }
 }
