@@ -59,7 +59,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
   }
 
   def getByTitle(gameTitle: String, page: Int, category: String): Future[List[GMarketDT]] = {
-    val categorySql = if (category == "全て") "" else s"AND category.category = $category"
+    val categorySql = if (category == "全て") "" else sqls"AND category.category = $category"
     readOnly { implicit session =>
       val sql =
         sql"""SELECT
