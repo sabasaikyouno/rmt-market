@@ -21,8 +21,8 @@ class HomeController @Inject()(
     }
   }
 
-  def getGameDataListByTitle(gameTitle: String, page:Int) = Action.async { implicit request =>
-    gameDataRepository.getByTitle(gameTitle, page).map { list =>
+  def getGameDataListByTitle(gameTitle: String, page:Int, category: String) = Action.async { implicit request =>
+    gameDataRepository.getByTitle(gameTitle, page, category).map { list =>
       Ok(Json.toJson(list))
     }
   }
