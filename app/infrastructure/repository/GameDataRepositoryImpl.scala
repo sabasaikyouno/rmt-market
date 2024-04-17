@@ -58,14 +58,17 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
-  def getByTitle(gameTitle: String, page: Int): Future[List[GMarketDT]] = {
+  def getByTitle(gameTitle: String, page: Int, category: String): Future[List[GMarketDT]] = {
+    val categorySql = if (category == "全て") "" else sqls"AND category.category = $category"
     readOnly { implicit session =>
       val sql =
         sql"""SELECT
           | game_data.*
           | FROM game_data
           | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+          | INNER JOIN category ON category.category_id = game_data.category_id
           | WHERE game_title_data.game_title = $gameTitle
+          | $categorySql
           | ORDER BY updated_time DESC
           | LIMIT ${(page - 1).max(0) * 21}, 21
            """.stripMargin
@@ -93,6 +96,18 @@ class GameDataRepositoryImpl extends GameDataRepository {
         | FROM game_title_data
          """.stripMargin
     sql.map(resultSetToGameTitleData).list.apply()
+  }
+
+  def getCategory(gameTitle: String): Future[List[String]] = readOnly { implicit session =>
+    val sql =
+      sql"""SELECT
+           | DISTINCT category.category
+           | FROM game_data
+           | INNER JOIN category ON category.category_id = game_data.category_id
+           | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+           | WHERE game_title_data.game_title = $gameTitle
+         """.stripMargin
+    sql.map(_.string("category")).list.apply()
   }
 
   private[this] def resultSetToGMarketData(rs: WrappedResultSet): GMarketDT =
