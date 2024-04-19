@@ -9,7 +9,7 @@ trait GameDataRepository {
 
   def getById(gameTitleId: Int): Future[List[GMarketDT]]
 
-  def getByTitle(gameTitle: String, page: Int, category: String): Future[List[GMarketDT]]
+  def getByTitle(gameTitle: String, page: Int, category: String, search: Option[String]): Future[List[GMarketDT]]
 
   def getGameDataSize(gameTitle: String): Future[Option[Int]]
 

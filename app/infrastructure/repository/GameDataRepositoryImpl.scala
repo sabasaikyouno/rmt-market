@@ -58,8 +58,9 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
-  def getByTitle(gameTitle: String, page: Int, category: String): Future[List[GMarketDT]] = {
-    val categorySql = if (category == "全て") "" else sqls"AND category.category = $category"
+  def getByTitle(gameTitle: String, page: Int, category: String, search: Option[String]): Future[List[GMarketDT]] = {
+    val categorySql = if (category == "全て") sqls"" else sqls"AND category.category = $category"
+    val searchSql = search.map(s => sqls"AND game_data.title LIKE ${s"%$s%"}").getOrElse(sqls"")
     readOnly { implicit session =>
       val sql =
         sql"""SELECT
@@ -69,6 +70,7 @@ class GameDataRepositoryImpl extends GameDataRepository {
           | INNER JOIN category ON category.category_id = game_data.category_id
           | WHERE game_title_data.game_title = $gameTitle
           | $categorySql
+          | $searchSql
           | ORDER BY updated_time DESC
           | LIMIT ${(page - 1).max(0) * 21}, 21
            """.stripMargin
