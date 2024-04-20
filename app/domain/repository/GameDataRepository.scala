@@ -11,7 +11,7 @@ trait GameDataRepository {
 
   def getByTitle(gameTitle: String, page: Int, category: String, search: Option[String]): Future[List[GMarketDT]]
 
-  def getGameDataSize(gameTitle: String): Future[Option[Int]]
+  def getGameDataSize(gameTitle: String, category: String, search: Option[String]): Future[Option[Int]]
 
   def getAllGameTitleData: Future[List[GameTitleData]]
 

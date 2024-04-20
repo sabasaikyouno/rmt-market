@@ -6,7 +6,7 @@
 # An example controller showing a sample home page
 GET     /api/getGameDataListById/:gameTitleId               controllers.HomeController.getGameDataListById(gameTitleId: Int)
 GET     /api/getGameDataListByTitle/:gameTitle              controllers.HomeController.getGameDataListByTitle(gameTitle: String, page: Int, category: String, search: Option[String])
-GET     /api/getGameDataPage/:gameTitle                     controllers.HomeController.getGameDataPage(gameTitle: String)
+GET     /api/getGameDataPage/:gameTitle                     controllers.HomeController.getGameDataPage(gameTitle: String, category: String, search: Option[String])
 GET     /api/getAllGameTitleData                            controllers.HomeController.getAllGameTitleData()
 GET     /api/getSearchOptions                               controllers.HomeController.getSearchOptions()
 GET     /api/getCategory/:gameTitle                         controllers.HomeController.getCategory(gameTitle: String)
