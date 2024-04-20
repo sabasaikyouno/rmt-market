@@ -78,14 +78,19 @@ class GameDataRepositoryImpl extends GameDataRepository {
     }
   }
 
-  def getGameDataSize(gameTitle: String): Future[Option[Int]] = {
+  def getGameDataSize(gameTitle: String, category: String, search: Option[String]): Future[Option[Int]] = {
+    val categorySql = if (category == "全て") sqls"" else sqls"AND category.category = $category"
+    val searchSql = search.map(s => sqls"AND game_data.title LIKE ${s"%$s%"}").getOrElse(sqls"")
     readOnly { implicit session =>
       val sql =
         sql"""SELECT
              | COUNT(*)
              | FROM game_data
              | INNER JOIN game_title_data ON game_title_data.game_title_id = game_data.game_title_data_id
+             | INNER JOIN category ON category.category_id = game_data.category_id
              | WHERE game_title_data.game_title = $gameTitle
+             | $categorySql
+             | $searchSql
            """.stripMargin
       sql.map(_.int("COUNT(*)")).single.apply()
     }
