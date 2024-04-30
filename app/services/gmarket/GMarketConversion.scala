@@ -41,7 +41,7 @@ object GMarketConversion {
       gameTitleId,
       dt.detail,
       dt.price,
-      dt.url,
+      "https://gameclub.jp/" + dt.url,
       toGMarketCategory(dt.category),
       2
     )
